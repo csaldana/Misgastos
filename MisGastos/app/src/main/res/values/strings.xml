@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MisGastos</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_registro">Cuenta</string>
+
+    <string-array name= "moneda">
+        <item>Dolares</item>
+        <item>Pesos</item>
+        </string-array>
+
+    <string-array name= "tipo">
+        <item>Cuenta de caja</item>
+        <item>Cuenta Bancaria</item>
+        <item>Tarjeta de Credito</item>
+        <item>Cuenta de Activo</item>
+        <item>Cuenta de Pasivo</item>
+    </string-array>
+
+</resources>
