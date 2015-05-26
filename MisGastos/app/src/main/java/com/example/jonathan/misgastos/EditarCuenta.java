@@ -7,17 +7,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 
 /**
  * Created by jonathan on 24/05/2015.
  */
-public class EditarCuenta extends Activity {
+public class EditarCuenta extends Activity implements View.OnClickListener{
 
     EditText  txtEtiqueta, txtDescripcion, txtSaldo;
     Spinner spiMoneda ,spiTipo;
     Button btnactualizar, btnEliminar;
+
     SQLControlador dbcon;
 
     long _id;
@@ -26,14 +28,6 @@ public class EditarCuenta extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editarcuenta);
 
-        txtEtiqueta  = (EditText) findViewById(R.id.txtEtiqueta);
-        txtDescripcion  = (EditText) findViewById(R.id.txtDescripcion);
-        txtSaldo  = (EditText) findViewById(R.id.txtSaldo);
-        spiMoneda = (Spinner) findViewById(R.id.spiMoneda);
-        spiTipo = (Spinner) findViewById(R.id.spiTipo);
-        btnactualizar = (Button) findViewById(R.id.btnactualizar);
-        btnEliminar = (Button) findViewById(R.id.btnEliminar);
-
         dbcon = new SQLControlador(this);
         try {
             dbcon.abrirBaseDeDatos();
@@ -41,12 +35,22 @@ public class EditarCuenta extends Activity {
             e.printStackTrace();
         }
 
+        txtEtiqueta  = (EditText) findViewById(R.id.txtEtiquetaEditar);
+        txtDescripcion  = (EditText) findViewById(R.id.txtDescripcionEditar);
+        txtSaldo  = (EditText) findViewById(R.id.txtSaldoEditar);
+        spiMoneda = (Spinner) findViewById(R.id.spiMonedaEditar);
+        spiTipo = (Spinner) findViewById(R.id.spiTipoEditar);
+        btnactualizar = (Button) findViewById(R.id.btnactualizar);
+        btnEliminar = (Button) findViewById(R.id.btnEliminar);
+
+
+
         Intent i = getIntent();
         String id = i.getStringExtra("id");
         String etiqueta = i.getStringExtra("etiqueta");
         String descripcion = i.getStringExtra("descripcion");
         String saldo = i.getStringExtra("saldo");
-        String Moneda = i.getStringExtra("spiMoneda");
+        String spioneda = i.getStringExtra("spiMoneda");
         String Tipo = i.getStringExtra("spiTipo");
 
         _id = Long.parseLong(id);
@@ -57,8 +61,8 @@ public class EditarCuenta extends Activity {
         spiMoneda.getSelectedItem();
         spiTipo.getSelectedItem();
 
-        btnactualizar.setOnClickListener((android.view.View.OnClickListener) this);
-        btnEliminar.setOnClickListener((android.view.View.OnClickListener) this);
+        btnactualizar.setOnClickListener(this);
+        btnEliminar.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -68,13 +72,18 @@ public class EditarCuenta extends Activity {
                 String etiqueta = txtEtiqueta.getText().toString();
                 String descripcion = txtDescripcion.getText().toString();
                 String saldo = txtSaldo.getText().toString();
-                String moneda = spiMoneda.getSelectedItem().toString();
-                String tipo = spiTipo.getSelectedItem().toString();
-                //dbcon.actualizarCuenta(_id, etiqueta);
-                //dbcon.actualizarCuenta(_id, descripcion);
-                //dbcon.actualizarCuenta(_id, saldo);
-                //dbcon.actualizarCuenta(_id, moneda);
-                //dbcon.actualizarCuenta(_id, tipo);
+                String spimoneda = spiMoneda.getSelectedItem().toString();
+                String spitipo = spiTipo.getSelectedItem().toString();
+
+                if(etiqueta.equals("")) {
+
+                    Toast.makeText(getApplicationContext(), "Error, Revisar nuevamente", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    dbcon.actualizarCuenta(_id, etiqueta, descripcion, saldo, spimoneda, spitipo);
+                }
+
 
                 this.returnHome();
                 break;

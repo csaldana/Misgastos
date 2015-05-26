@@ -68,13 +68,13 @@ public class NuevaCuenta extends Activity implements View.OnClickListener {
             String spimoneda = spiMoneda.getSelectedItem().toString();
             String spitipo = spiTipo.getSelectedItem().toString();
 
-            if(etiqueta.trim().length() == 0){
+            if(etiqueta.equals("")){
                 Toast.makeText(getApplicationContext(), "Error, Revisar nuevamente", Toast.LENGTH_SHORT).show();
+            }else {
+                dbConexion.insertarCuenta(etiqueta, descripcion, saldo, spimoneda, spitipo);
+                Intent main = new Intent(NuevaCuenta.this, MainActivity.class);
+                startActivity(main);
             }
-            dbConexion.insertarCuenta(etiqueta,descripcion,saldo,spimoneda,spitipo);
-            Intent main = new Intent(NuevaCuenta.this, MainActivity.class);
-            startActivity(main);
-
             default:
             break;
         }

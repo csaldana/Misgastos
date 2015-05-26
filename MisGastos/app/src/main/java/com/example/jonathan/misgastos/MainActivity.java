@@ -60,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
         };
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-                MainActivity.this, R.layout.formato_listview, cursor, from, to);
+                MainActivity.this, R.layout.otro_formato, cursor, from, to);
 
         adapter.notifyDataSetChanged();
         listview.setAdapter(adapter);
